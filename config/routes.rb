@@ -4,6 +4,11 @@ Rails.application.routes.draw do
       post '/register', to: 'registrations#create'
       post '/login', to: 'sessions#create'
       post '/logout', to: 'sessions#destroy'
+
+      get '/balance', to: 'wallets#balance'
+      post '/deposit', to: 'wallets#deposit'
+      post '/withdraw', to: 'wallets#withdraw'
+      post '/transfer', to: 'wallets#transfer'
     end
   end
 end

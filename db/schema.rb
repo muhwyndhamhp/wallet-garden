@@ -25,9 +25,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_05_050046) do
 
   create_table "transactions", force: :cascade do |t|
     t.decimal "amount"
-    t.integer "source_wallet_id", null: false
-    t.integer "target_wallet_id", null: false
-    t.integer "type"
+    t.integer "source_wallet_id"
+    t.integer "target_wallet_id"
+    t.integer "operation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["source_wallet_id"], name: "index_transactions_on_source_wallet_id"
@@ -51,6 +51,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_05_050046) do
     t.index ["user_type", "user_id"], name: "index_wallets_on_user"
   end
 
-  add_foreign_key "transactions", "source_wallets"
-  add_foreign_key "transactions", "target_wallets"
+  add_foreign_key "transactions", "wallets", column: "source_wallet_id"
+  add_foreign_key "transactions", "wallets", column: "target_wallet_id"
 end
