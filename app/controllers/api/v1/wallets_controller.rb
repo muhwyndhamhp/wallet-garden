@@ -25,15 +25,15 @@ class Api::V1::WalletsController < ApplicationController
   end
 
   def transfer
-    target = User.find(wallet_params[:target_user_id]).wallet
-    if @current_user.wallet.transfer(wallet_params[:amount], target)
+    target = Wallet.find(wallet_params[:target_wallet_id])
+    if (res = @current_user.wallet.transfer(wallet_params[:amount], target))
       balance
     else
-      render json: { errors: @current_user.wallet.errors }, status: :bad_request
+      render json: { errors: res.errors }, status: :bad_request
     end
   end
 
   def wallet_params
-    params.permit(:amount, :target_user_id)
+    params.permit(:amount, :target_wallet_id)
   end
 end

@@ -9,6 +9,13 @@ Rails.application.routes.draw do
       post '/deposit', to: 'wallets#deposit'
       post '/withdraw', to: 'wallets#withdraw'
       post '/transfer', to: 'wallets#transfer'
+
+      resources :teams do
+        get :balance, on: :member
+        post :deposit, on: :member
+        post :withdraw, on: :member
+        post :transfer, on: :member
+      end
     end
   end
 end

@@ -30,6 +30,8 @@ class Wallet < ApplicationRecord
   def transfer(amount, target_wallet)
     if balance < amount
       return errors.add(:base, 'Amount transferred more than existing balance')
+    elsif target_wallet.id == self.id
+      return errors.add(:base, 'Target Wallet cannot be the same as Source Wallet')
     end
     Transaction.create(
       amount: amount,

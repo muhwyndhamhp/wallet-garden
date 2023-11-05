@@ -1,9 +1,10 @@
 class User < ApplicationRecord
+  include WalletConcern
   has_one :wallet, as: :user, dependent: :destroy
 
   has_secure_password
   validates :email, presence: true, uniqueness: true
-  after_create :create_user_wallet
+  after_create :create_wallet
 
   def regenerate_auth_token
     update(auth_token: generate_unique_auth_token)
@@ -20,9 +21,5 @@ class User < ApplicationRecord
       token = SecureRandom.urlsafe_base64
       break token unless self.class.exists?(auth_token: token)
     end
-  end
-
-  def create_user_wallet
-    self.wallet = Wallet.create if wallet.nil?
   end
 end
