@@ -48,3 +48,13 @@ It will also create wallet on every user/team/stock being created. Including dur
 
 #### API Namespace
 All of the API in this code have prefix namespace of `/api/v1/`. This is to make sure the API is flexible enough for future revisions when necessary. 
+
+#### LatestStockPrice API
+I've created gem-like api for consuming the RapidAPI endpoint that can be found in the `/lib/latest_stock_price` Directory. 
+I also create sample endpoint to test the API via `StocksController` class. You would required to supply your own API Key which can be done by adding:
+```shell
+RAPID_API_KEY=your-api-key
+```
+into your local `.env` files. 
+
+Thank you. 
