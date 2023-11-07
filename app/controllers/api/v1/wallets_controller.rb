@@ -24,7 +24,6 @@ module Api
       def transfer
         target = Wallet.find(wallet_params[:target_wallet_id])
         balance if @current_user.wallet.transfer(wallet_params[:amount], target)
-        balance
       rescue StandardError => e
         render json: { errors: e }, status: :bad_request
       end
