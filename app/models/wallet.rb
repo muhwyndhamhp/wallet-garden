@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Wallet < ApplicationRecord
   belongs_to :user, polymorphic: true
 
@@ -10,18 +12,17 @@ class Wallet < ApplicationRecord
 
   def deposit(amount)
     Transaction.create(
-      amount: amount,
+      amount:,
       target_wallet: self,
       operation: Transaction.operation_types[:credit]
     )
   end
 
   def withdraw(amount)
-    if balance < amount
-      return errors.add(:base, 'Amount withdrawn more than existing balance')
-    end
+    raise ArgumentError, 'Amount withdrawn more than existing balance' if balance < amount
+
     Transaction.create(
-      amount: amount,
+      amount:,
       source_wallet: self,
       operation: Transaction.operation_types[:debit]
     )
@@ -29,13 +30,14 @@ class Wallet < ApplicationRecord
 
   def transfer(amount, target_wallet)
     if balance < amount
-      return errors.add(:base, 'Amount transferred more than existing balance')
-    elsif target_wallet.id == self.id
-      return errors.add(:base, 'Target Wallet cannot be the same as Source Wallet')
+      raise ArgumentError, 'Amount transferred more than existing balance'
+    elsif target_wallet.id == id
+      raise ArgumentError, 'Target Wallet cannot be the same as Source Wallet'
     end
+
     Transaction.create(
-      amount: amount,
-      target_wallet: target_wallet,
+      amount:,
+      target_wallet:,
       source_wallet: self,
       operation: Transaction.operation_types[:transfer]
     )

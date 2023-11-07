@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
@@ -9,6 +11,9 @@ Rails.application.routes.draw do
       post '/deposit', to: 'wallets#deposit'
       post '/withdraw', to: 'wallets#withdraw'
       post '/transfer', to: 'wallets#transfer'
+
+      get '/prices', to: 'stocks#prices'
+      get '/latest-price', to: 'stocks#latest_price'
 
       resources :teams do
         get :balance, on: :member
