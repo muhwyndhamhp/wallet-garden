@@ -19,6 +19,7 @@ You can register your account via:
 ```json
 // POST: /api/v1/register
 {
+  "name": "your name",
   "email": "your email",
   "password": "your password",
   "password_confirmation": "re-confirm your password"
